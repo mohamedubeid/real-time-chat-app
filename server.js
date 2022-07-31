@@ -8,14 +8,12 @@ const {
     userJoin,
     getCurrentUser,
     userLeave,
-    getroomUsers,
+    getRoomUsers,
 } = require('./utils/users');
 
 const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
-
-const boatName = 'chatCord';
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -28,19 +26,25 @@ io.on('connection', (socket) => {
 
         socket.emit(
             'message',
-            formatMessage(boatName, `welcome to chatCord ${username}`)
+            formatMessage(
+                process.env.BOAT_NAME,
+                `welcome to chatCord ${username}`
+            )
         );
 
         socket.broadcast
             .to(user.room)
             .emit(
                 'message',
-                formatMessage(boatName, `${username} has joined the chat.`)
+                formatMessage(
+                    process.env.BOAT_NAME,
+                    `${username} has joined the chat.`
+                )
             );
 
         io.to(user.room).emit('usersRoom', {
             room: user.room,
-            users: getroomUsers(user.room),
+            users: getRoomUsers(user.room),
         });
     });
 
@@ -55,13 +59,16 @@ io.on('connection', (socket) => {
         if (user) {
             io.to(user.room).emit(
                 'message',
-                formatMessage(boatName, `${user.username} has left the chat`)
+                formatMessage(
+                    process.env.BOAT_NAME,
+                    `${user.username} has left the chat`
+                )
             );
         }
 
         io.to(user.room).emit('usersRoom', {
             room: user.room,
-            users: getroomUsers(user.room),
+            users: getRoomUsers(user.room),
         });
     });
 });

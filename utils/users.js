@@ -19,12 +19,12 @@ function userLeave(id) {
     return 'user does not exist';
 }
 
-function getroomUsers(room) {
+function getRoomUsers(room) {
     return users.filter((user) => user.room === room);
 }
 module.exports = {
     userJoin,
     getCurrentUser,
     userLeave,
-    getroomUsers,
+    getRoomUsers,
 };
