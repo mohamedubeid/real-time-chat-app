@@ -4,9 +4,9 @@ const disconnect = require('./listeners/disconnect');
 
 const connection = (io) => {
     io.on('connection', (socket) => {
-        joinRoom(socket);
-        chatMessage(socket);
-        disconnect(socket);
+        joinRoom(socket, io);
+        chatMessage(socket, io);
+        disconnect(socket, io);
     });
 };
 

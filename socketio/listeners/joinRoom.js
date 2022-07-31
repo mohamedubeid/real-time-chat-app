@@ -1,7 +1,7 @@
-const { userJoin } = require('../../utils/users');
+const { userJoin, getRoomUsers } = require('../../utils/users');
 const formatMessage = require('../../utils/messages');
 
-module.exports = (socket) => {
+module.exports = (socket, io) => {
     socket.on('joinRoom', ({ username, room }) => {
         console.log('New WS connection...', username, room);
         const user = userJoin(socket.id, username, room);

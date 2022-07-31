@@ -1,6 +1,6 @@
 const { userLeave, getRoomUsers } = require('../../utils/users');
 const formatMessage = require('../../utils/messages');
-module.exports = (socket) => {
+module.exports = (socket, io) => {
     socket.on('disconnect', () => {
         const user = userLeave(socket.id);
 
